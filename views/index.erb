@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FibScale</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <style>
+      .fib-result {
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-<%= color %>">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">FibScale</a>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+        <form id="fib" action="/" method="POST">
+          <input type="hidden" name="delay" value="<%= delay %>">
+          <div class="mb-3">
+            <label for="fib-number" class="form-label">Fibonacci number to compute</label>
+            <input id="fib-number" class="form-control" type="number" aria-describedby="fib-number-help" name="fib" value="<%= fib_number %>" min=0>
+            <div id="fib-number-help" class="form-text">
+              Enter the
+              <a href="https://en.wikipedia.org/wiki/Fibonacci_number">fibonacci number</a>
+              you want to compute.
+            </div>
+          </div>
+          <div>
+            <span class="me-3">Algorithm</span>
+            <div class="form-check form-check-inline">
+              <input id="fib-algorithm-recursive" class="form-check-input" type="radio" name="algorithm" value="recursive" <%= fib_algorithm == 'recursive' ? 'checked' : '' %>>
+              <label for="fib-algorithm-recursive" class="form-check-label">Recursive</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input id="fib-algorithm-iterative" class="form-check-input" type="radio" name="algorithm" value="iterative" <%= fib_algorithm == 'iterative' ? 'checked' : '' %>>
+              <label for="fib-algorithm-iterative" class="form-check-label">Iterative</label>
+            </div>
+          </div>
+          <div class="mt-5 text-center">
+            <button id="fib-compute" class="btn btn-primary" type="submit">
+              <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              <span class="text">Compute</span>
+            </button>
+          </div>
+        </form>
+
+        <% unless error.nil? %>
+          <div class="alert alert-danger d-flex flex-column mt-5">
+            <strong class="mb-2">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              Oops... something went wrong!
+            </strong>
+            <div><%= error_message %></div>
+            <% if error == 'fib_recursive_max' %>
+              <form class="mt-2" action="/" method="POST">
+                <input type="hidden" name="fib" value="<%= fib_number %>">
+                <input type="hidden" name="algorithm" value="iterative">
+                <button type="submit" class="btn btn-info btn-sm">Switch to the iterative algorithm</button>
+              </form>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% unless fib_result.nil? %>
+          <div id="fib-result">
+            <div class="mt-5 text-center">
+              <p class="lead text-success">
+                The <%= ordinalize fib_number %> fibonacci number is: <span class="fib-result"><%= format_number fib_result %></span>
+              </p>
+              <p>
+                <small class="text-muted">This result took <%= format('%.3f', elapsed_time) %> seconds to compute with the <%= fib_algorithm %> algorithm.</small>
+              </p>
+              <p>
+                <small class="text-warning">(The computation was artificially delayed by <%= format('%.3f', delay) %> seconds.)</small>
+              </p>
+            </div>
+
+            <div class="mt-5 text-center">
+              <form id="fib-next" action="/" method="POST">
+                <input type="hidden" name="fib" value="<%= next_fib_number %>">
+                <input type="hidden" name="algorithm" value="<%= fib_algorithm %>">
+                <input type="hidden" name="delay" value="<%= delay %>">
+                <div class="btn-group">
+                  <button id="fib-compute-next" class="btn btn-warning" type="submit">Compute the next number</button>
+                  <button id="fib-start-over" class="btn btn-secondary" type="submit" name="fib" value="0" <%= fib_number == 0 ? 'disabled' : '' %>>Start over</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      const $fibForm = $('#fib');
+      const $compute = $fibForm.find('#fib-compute');
+      const $spinner = $compute.find('#spinner');
+      const $computeText = $compute.find('.text');
+
+      $fibForm.on('click', '#fib-compute', compute);
+      $('body').on('click', '#fib-compute-next', compute);
+      $('body').on('click', '#fib-start-over', compute);
+
+      const $algorithm = $fibForm.find('[name=algorithm]');
+      $algorithm.on('change', () => {
+        const selectedAlgorithm = $algorithm.filter(':checked').val();
+        $('#fib-next').find('[name=algorithm]').val(selectedAlgorithm);
+      });
+
+      function compute() {
+        $spinner.removeClass('d-none');
+        $computeText.text('Computing...');
+        setTimeout(() => {
+          $compute.prop('disabled', true);
+          $('#fib-result').find('#fib-compute-next').prop('disabled', true);
+          $('#fib-result').find('#fib-start-over').prop('disabled', true);
+        }, 0);
+      }
+    </script>
+  </body>
+</html>

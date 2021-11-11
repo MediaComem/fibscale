@@ -1,0 +1,12 @@
+# https://docs.rubocop.org/rubocop/configuration.html
+AllCops:
+  NewCops: enable
+
+Metrics/BlockLength:
+  Max: 50
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/ParameterLists:
+  Max: 10
