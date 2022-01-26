@@ -77,9 +77,11 @@
               <p>
                 <small class="text-muted">This result took <%= format('%.3f', elapsed_time) %> seconds to compute with the <%= fib_algorithm %> algorithm.</small>
               </p>
+              <% if delay != 0 %>
               <p>
                 <small class="text-warning">(The computation was artificially delayed by <%= format('%.3f', delay) %> seconds.)</small>
               </p>
+              <% end %>
             </div>
 
             <div class="mt-5 text-center">
