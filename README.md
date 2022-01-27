@@ -47,13 +47,14 @@ bundle exec ruby fibscale.rb 3
 ```
 
 This integer is a worker number and will change the color of the navbar (cycling
-through a list of seven pre-configured colors).
+through a list of seven pre-configured colors). This makes it easy to identify
+multiple deployed instances.
 
 Further configuration is possible through environment variables:
 
 | Environment variable     | Default value | Description                                                                     |
 | :----------------------- | :------------ | :------------------------------------------------------------------------------ |
-| `FIBSCALE_HOST`          | `0.0.0.0`     | IP address to listen on (or `0.0.0.0` for any address)                          |
+| `FIBSCALE_HOST`          | `0.0.0.0`     | IP address to listen on (or `0.0.0.0` for any address).                         |
 | `FIBSCALE_PORT`          | `3000`        | The port the application will listen on.                                        |
 | `FIBSCALE_DELAY`         | `0`           | An optional artificial delay in seconds before returning each result.           |
 | `FIBSCALE_MAX`           | `10000`       | The maximum Fibonacci number that can be computed.                              |
