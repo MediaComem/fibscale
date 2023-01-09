@@ -138,6 +138,8 @@ helpers do
 end
 
 def fib(number)
+  raise ArgumentError.new("Number must be greater than or equal to zero") if number.negative?
+
   case number
   when 0
     0
@@ -149,8 +151,13 @@ def fib(number)
 end
 
 def fib_iter(first, second, number)
-  return -1 if number.negative?
+  raise ArgumentError.new("Number must be greater than or equal to zero") if number.negative?
   return first if number.zero?
 
-  fib_iter(second, first + second, number - 1)
+  while number >= 1
+    first, second = second, first + second
+    number -= 1
+  end
+
+  first
 end
