@@ -2,47 +2,49 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    json (2.6.3)
     multi_json (1.15.0)
-    mustermann (1.1.1)
+    mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
-    parallel (1.21.0)
-    parser (3.1.0.0)
+    parallel (1.22.1)
+    parser (3.2.0.0)
       ast (~> 2.4.1)
-    puma (5.6.0)
+    puma (6.0.2)
       nio4r (~> 2.0)
-    rack (2.2.3)
-    rack-protection (2.1.0)
+    rack (2.2.5)
+    rack-protection (3.0.5)
       rack
     rainbow (3.1.1)
-    regexp_parser (2.2.0)
+    regexp_parser (2.6.1)
     rexml (3.2.5)
-    rubocop (1.25.0)
+    rubocop (1.42.0)
+      json (~> 2.3)
       parallel (~> 1.10)
-      parser (>= 3.1.0.0)
+      parser (>= 3.1.2.1)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
-      rexml
-      rubocop-ast (>= 1.15.1, < 2.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.24.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.15.1)
-      parser (>= 3.0.1.1)
+    rubocop-ast (1.24.1)
+      parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sinatra (2.1.0)
-      mustermann (~> 1.0)
-      rack (~> 2.2)
-      rack-protection (= 2.1.0)
+    sinatra (3.0.5)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.5)
       tilt (~> 2.0)
-    sinatra-contrib (2.1.0)
+    sinatra-contrib (3.0.5)
       multi_json
-      mustermann (~> 1.0)
-      rack-protection (= 2.1.0)
-      sinatra (= 2.1.0)
+      mustermann (~> 3.0)
+      rack-protection (= 3.0.5)
+      sinatra (= 3.0.5)
       tilt (~> 2.0)
-    tilt (2.0.10)
-    unicode-display_width (2.1.0)
+    tilt (2.0.11)
+    unicode-display_width (2.4.2)
 
 PLATFORMS
   aarch64-linux-musl
@@ -50,10 +52,10 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
-  puma (~> 5.5)
+  puma (~> 6.0)
   rubocop (~> 1.22)
-  sinatra (~> 2.1)
-  sinatra-contrib (~> 2.1)
+  sinatra (~> 3.0)
+  sinatra-contrib (~> 3.0)
 
 BUNDLED WITH
-   2.2.22
+   2.2.32
