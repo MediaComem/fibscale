@@ -15,12 +15,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      # https://github.com/asdf-vm/actions#setup
-      - name: Install asdf
-        uses: asdf-vm/actions/setup@v3
-        with:
-          asdf_branch: v0.14.1
-
       # https://github.com/ruby/setup-ruby
       - name: Install ruby & dependencies
         uses: ruby/setup-ruby@v1
