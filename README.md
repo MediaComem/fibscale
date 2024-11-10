@@ -6,6 +6,7 @@ designed to demonstrate horizontal
 balancing](https://en.wikipedia.org/wiki/Load_balancing_(computing)).
 
 [![build](https://github.com/MediaComem/fibscale/actions/workflows/build.yml/badge.svg)](https://github.com/MediaComem/fibscale/actions/workflows/build.yml)
+[![publish](https://github.com/MediaComem/fibscale/actions/workflows/publish.yml/badge.svg)](https://github.com/MediaComem/fibscale/actions/workflows/publish.yml)
 [![license](https://img.shields.io/github/license/MediaComem/comem-wopr)](https://opensource.org/licenses/MIT)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
