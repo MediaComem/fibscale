@@ -1,6 +1,11 @@
 # https://docs.docker.com/build/concepts/context/#dockerignore-files
+/compose.yml
+/coverage
 /.dockerignore
 /Dockerfile
+/.github
 /LICENSE.txt
 /README.md
 /.rubocop.yml
+/spec
+/.tool-versions
