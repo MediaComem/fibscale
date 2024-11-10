@@ -21,6 +21,10 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Run automated tests & measure code coverage
+        run: |
+          bundle exec rspec
+
       - name: Analyze source code
         run: |
           bundle exec rubocop

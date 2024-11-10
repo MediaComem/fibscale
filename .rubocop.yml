@@ -1,4 +1,7 @@
 # https://docs.rubocop.org/rubocop/configuration.html
+require:
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
 
@@ -10,3 +13,6 @@ Metrics/MethodLength:
 
 Metrics/ParameterLists:
   Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 3
